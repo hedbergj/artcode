@@ -2,10 +2,14 @@
 
 some work merging art and code
 
-Make a Mandala:
+### Make a Mandala:
 
-[Mandala Maker](artcode/mandala-maker)
+[Mandala Maker](https://hedbergj.github.io/artcode/mandala-maker/)
 
-Make some Odd Subway Maps using Newtonian Gravity
+<img src="mandala-maker/examples/mandala-1.jpg" width="40%">
 
-[Subway N-body](artcode/subway-nbody)
+### Make some Odd Subway Maps using Newtonian Gravity
+
+[Subway N-body](https://hedbergj.github.io/artcode/subway-nbody/)
+
+About: [Subway N-Bodies](http://www.jameshedberg.com/creations/2020/06/19/subway-maps-gravity.html)
