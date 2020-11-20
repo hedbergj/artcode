@@ -8,9 +8,15 @@ Use the buttons on the top left to change your sand color. The buttons on the to
 
 Live version: [https://hedbergj.github.io/artcode/mandala-maker/](https://hedbergj.github.io/artcode/mandala-maker/)
 
-Some examples:
+## Some examples:
 
 ![Mandala-1](examples/mandala-1.jpg)
+
+
 ![Mandala-2](examples/mandala-2.jpg)
+
+
 ![Mandala-3](examples/mandala-3.jpg)
+
+
 ![Mandala-4](examples/mandala-4.jpg)
