@@ -1,29 +1,23 @@
 var orbiters=[];
 var neworbiters = [];
-var gravity = 1.0;
+var gravity = 1.5;
 var totalMass;
 var Trails = [];
 var paths = [];
 var masses = [];
 var xvels = [];
 var yvels = [];
-var colors = [];
+var colors = ['#F07B4F','#717FEB','#B3EB8F'];
 var c=0;
-var imgcount = 0;
-var ticks = 0;
 var SolarSystem;
 function setup(){
-
   //frameRate(20);
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowHeight, windowHeight);
 v1 = 9;
-orbiters=[];
 massRatio = 1000;
 cursor(CROSS);
  SolarSystem = new GravSystem(orbiters);
 colorMode(HSL, 360,100,100)
-background(0,0,100,0);
-ticks = 0;
 spawn3Bodies();
 
 //
@@ -33,29 +27,24 @@ spawn3Bodies();
 function spawn3Bodies() {
   for (i = 0;i<3;i++)
  {
-   masses[i]=random(50,400);
-   colors[0]=color(0,0,90);
-   colors[1]=color(0,0,50)
-   colors[2]=color(0,0,10)
-   // colors[0]=color(230,40,50)
-   // colors[1]=color(10,0,40)
-   // colors[2]=color(10,0,60)
+   masses[i]=random(10,200);
+   //colors[i]=color(random(0,360),0,random(10,80));
    velseed = 1;
    xvels[i] = random(-.2,.2);
    yvels[i] = random(-.2,.2);
    // xvels[2] = -(masses[0]*xvels[0]+masses[1]*xvels[1])/masses[2];
    // yvels[2] = -(masses[0]*yvels[0]+masses[1]*yvels[1])/masses[2];
-   orbiters.push(new Orbiter(createVector(random(.1*width,.9*width),random(0.1*height,0.9*height)),createVector(xvels[i],yvels[i]),createVector(0,0),masses[i], colors[i]));
+   orbiters.push(new Orbiter(createVector(random(width/4,3*width/4),random(height/4,3*height/4)),createVector(xvels[i],yvels[i]),createVector(0,0),masses[i], colors[i]));
    paths.push(new Path(colors[i]));
 }
 
 }
 
 function draw(){
-//background(240);
+background(0);
 for (l=0;l<orbiters.length;l++){
-  //paths[l].update(l);
-  //paths[l].display();
+  paths[l].update(l);
+  paths[l].display();
 }
 for (i=0;i<orbiters.length;i++){
   orbiters[i].display();
@@ -63,23 +52,22 @@ for (i=0;i<orbiters.length;i++){
 
 
 
-  for (var k = 0; k < 4; k++) { // increase the greater than value to increase simulation step rate
+  for (var k = 0; k < 2; k++) { // increase the greater than value to increase simulation step rate
       SolarSystem.do_physics(1.0 / 8); // increase the divisor to increase accuracy and decrease simulation speed
   }
 
 
-ticks++
-// if ( orbiters[0].position.magSq() > (2*width*width) && orbiters[1].position.magSq() > (2*width*width) && orbiters[2].position.magSq() > (2*width*width)) {
-//   imgcount++
-//   saveCanvas('3bodyart'+imgcount, 'png');
-//   restart()
-// }
-//
-// if (ticks == 20000){
-//   imgcount++
-//   saveCanvas('3bodyart'+imgcount, 'png');
-//   restart()
-// }
+
+  //COM();
+
+  // for (var i = Trails.length-1; i >= 0; i--) {
+  //   var p = Trails[i];
+  //   p.run();
+  //   if (p.isDead()) {
+  //     //remove the TrailDot
+  //     Trails.splice(i, 1);
+  //   }
+  // }
 
 }
 
@@ -91,10 +79,11 @@ var Path = function(color_){
 
 Path.prototype.update = function(whichOrb){
   this.ticker++
-  if(this.ticker % 2 == 0){
+
+  if(this.ticker % 3 == 0){
     //console.log(i)
     if(orbiters[whichOrb].position.x>.001){
-    this.points.push(new createVector(orbiters[whichOrb].position.x+random(-1,1),orbiters[whichOrb].position.y+random(-1,1)))
+    this.points.push(new createVector(orbiters[whichOrb].position.x,orbiters[whichOrb].position.y))
   }
   }
 }
@@ -103,7 +92,7 @@ Path.prototype.display = function(){
 
 noFill();
 stroke(this.color);
-strokeWeight(1);
+strokeWeight(3);
 beginShape();
 for (i=0;i<this.points.length;i++)
   {
@@ -143,18 +132,12 @@ function windowResized() {
     resizeCanvas(windowHeight, windowHeight); // width and height system variables updated here
   }
 
-
-  function restart(){
-
-      setup()
-  }
 function touchEnded(){
 
     for ( i = orbiters.length-1; i >= 0; i--){
       orbiters.splice(i,1);
       paths.splice(i,1);
-      clear()
-      background(0,0,95);
+
     // for ( i = Trails.length-1; i >= 0; i--){
     //   Trails.splice(i,1);
     // }
@@ -162,11 +145,4 @@ function touchEnded(){
   }
   spawn3Bodies();
     return false;
-}
-
-function keyTyped() {
-  if (key === 's') {
-    saveCanvas('3bodart'+ticks, 'png');
-
-  }
 }
